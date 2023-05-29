@@ -46,6 +46,10 @@ async function onButtonEl(e) {
 
         galleryWrapper.insertAdjacentHTML('beforeend', createMarkUp(moreData.data.hits))
 
+        if (!moreData.data.hits.length) {
+            return Notiflix.Notify.info('You have reached the limit of pictures!')
+        }
+
     } catch (error) {
         console.log(error)
     }
