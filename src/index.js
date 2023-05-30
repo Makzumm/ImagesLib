@@ -2,6 +2,8 @@ import Notiflix from 'notiflix';
 import { refs } from './js/vars.js';
 import FetchImage from './js/fetch.js';
 import createMarkUp from './js/markup.js';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const { loadMoreButtonEl, galleryWrapper, formEl, inputEl } = refs;
 const fetchImg = new FetchImage()
@@ -27,7 +29,6 @@ async function onformEl(e) {
     }
 
     try {
-
         const data = await fetchImg.getImage(fetchImg.fetchedData);
 
         clearHTML();
@@ -39,10 +40,16 @@ async function onformEl(e) {
             return;
         }
 
-        if (data.data.hits.length < 20) {
+        console.log(data)
+
+        if (!data.data.hits.length) {
             return [];
         } else {
             loadMoreButtonEl.classList.remove('is-hidden');
+        }
+
+        if (data.data.totalHits <= 20) {
+            loadMoreButtonEl.classList.add('is-hidden');
         }
 
         Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
@@ -60,7 +67,6 @@ async function onLoadMoreButtonEl(e) {
     fetchImg.increasePage();
 
     try {
-
         const response = await fetchImg.getImage(fetchImg.fetchedData);
 
         if (fetchImg.page === Math.ceil(response.data.totalHits / 20)) {
