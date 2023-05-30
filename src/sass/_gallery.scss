@@ -26,3 +26,9 @@
     color: rgb(255, 255, 255);
     cursor: pointer;
 }
+
+.is-hidden {
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
