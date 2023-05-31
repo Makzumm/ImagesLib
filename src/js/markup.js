@@ -2,12 +2,14 @@ export default function createMarkUp(data) {
     const HTMLMarkUp = data.map((el) => {
         return `
         <div class="photo-card">
-                <img
-                class="photo"
-                src="${el.webformatURL}"
-                loading="lazy"
-                alt="${el.tags}"
-            />
+            <a class="gallery__item" href="${el.largeImageURL}">
+                    <img
+                    class="photo"
+                    src="${el.webformatURL}"
+                    loading="lazy"
+                    alt="${el.tags}"
+                />
+            </a>
             <div class="info">
                 <p class="info-item">
                 <b>Likes: ${el.likes}</b>
@@ -26,5 +28,6 @@ export default function createMarkUp(data) {
     `
     }).join('')
 
-    return HTMLMarkUp
+    return HTMLMarkUp;
 }
+
