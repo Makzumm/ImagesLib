@@ -61,6 +61,16 @@ async function onformEl(e) {
         galleryWrapper.insertAdjacentHTML('beforeend', createMarkUp(data.data.hits));
 
         gallerySimpleLightbox.refresh();
+
+        const { height: cardHeight } = document
+            .querySelector(".gallery")
+            .firstElementChild.getBoundingClientRect();
+
+        window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+        });
+
     } catch (error) {
         console.log(error)
     }
@@ -112,7 +122,7 @@ function clearHTML() {
 //     try {
 //         const response = await fetchImg.getImage(fetchImg.fetchedData);
 
-//         if (fetchImg.page === Math.ceil(response.data.totalHits / 20)) {
+//         if (fetchImg.page === Math.ceil(response.data.total / 20)) {
 //             loadMoreButtonEl.classList.add('is-hidden');
 //             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
 //         }
