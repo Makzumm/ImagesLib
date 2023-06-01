@@ -22,9 +22,11 @@ formEl.addEventListener('submit', onformEl)
 async function onformEl(e) {
     e.preventDefault();
 
+    fetchImg.query = e.currentTarget.elements.searchQuery.value.trim();
+
     fetchImg.pageToStartPosition();
 
-    fetchImg.query = e.currentTarget.elements.searchQuery.value.trim();
+    inputEl.blur()
 
     if (fetchImg.query === '') {
         Notiflix.Notify.info('Please, type something!');
@@ -45,31 +47,20 @@ async function onformEl(e) {
             return;
         }
 
-        console.log(data)
+        // if (!data.data.hits.length) {
+        //     return [];
+        // } else {
+        //     loadMoreButtonEl.classList.remove('is-hidden');
+        // }
 
-        if (!data.data.hits.length) {
-            return [];
-        } else {
-            loadMoreButtonEl.classList.remove('is-hidden');
-        }
-
-        if (data.data.totalHits <= 20) {
-            loadMoreButtonEl.classList.add('is-hidden');
-        }
+        // if (data.data.totalHits <= 20) {
+        //     loadMoreButtonEl.classList.add('is-hidden');
+        // }
 
         Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
         galleryWrapper.insertAdjacentHTML('beforeend', createMarkUp(data.data.hits));
 
         gallerySimpleLightbox.refresh();
-
-        const { height: cardHeight } = document
-            .querySelector(".gallery")
-            .firstElementChild.getBoundingClientRect();
-
-        window.scrollBy({
-            top: cardHeight * 2,
-            behavior: "smooth",
-        });
 
     } catch (error) {
         console.log(error)
@@ -80,10 +71,13 @@ async function onformEl(e) {
 window.addEventListener('scroll', debounce(onScroll, DEBOUNCE_DELAY));
 
 async function onScroll() {
-
-    console.log()
-
     fetchImg.increasePage();
+
+    let inputVal = inputEl.value.trim();
+
+    if (inputVal === '') {
+        return [];
+    }
 
     try {
 
@@ -94,10 +88,7 @@ async function onScroll() {
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
         }
 
-
-        if (!window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-            return;
-        } else {
+        if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
             galleryWrapper.insertAdjacentHTML('beforeend', createMarkUp(response.data.hits))
         }
 
