@@ -1,4 +1,5 @@
 .gallery {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(1, 1fr);
@@ -31,4 +32,30 @@
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
+}
+
+.button-up {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 90%;
+    right: 3%;
+    padding: 6px 8px;
+
+    background-color: transparent;
+    border: 3px solid cadetblue;
+    border-radius: 30%;
+
+    cursor: pointer;
+    transition: transform 250ms linear, opacity 250ms linear;
+    transform: translateX(0%);
+
+    opacity: 1;
+}
+
+.button-up-hidden {
+    opacity: 0;
+    transform: translateX(200%);
 }

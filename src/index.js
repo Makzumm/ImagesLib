@@ -1,8 +1,9 @@
-import Notiflix from 'notiflix';
 import { refs } from './js/vars.js';
 import FetchImage from './js/fetch.js';
 import createMarkUp from './js/markup.js';
+import upButton from './js/up-button.js';
 
+import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -46,16 +47,6 @@ async function onformEl(e) {
             clearHTML();
             return;
         }
-
-        // if (!data.data.hits.length) {
-        //     return [];
-        // } else {
-        //     loadMoreButtonEl.classList.remove('is-hidden');
-        // }
-
-        // if (data.data.totalHits <= 20) {
-        //     loadMoreButtonEl.classList.add('is-hidden');
-        // }
 
         Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
         galleryWrapper.insertAdjacentHTML('beforeend', createMarkUp(data.data.hits));
@@ -103,6 +94,8 @@ function clearHTML() {
     galleryWrapper.innerHTML = '';
 }
 
+upButton();
+
 //////////// BUTTON
 
 // loadMoreButtonEl.addEventListener('click', onLoadMoreButtonEl);
@@ -131,3 +124,13 @@ function clearHTML() {
 //         console.log(error)
 //     }
 // }
+
+// if (!data.data.hits.length) {
+        //     return [];
+        // } else {
+        //     loadMoreButtonEl.classList.remove('is-hidden');
+        // }
+
+        // if (data.data.totalHits <= 20) {
+        //     loadMoreButtonEl.classList.add('is-hidden');
+        // }
